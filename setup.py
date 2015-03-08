@@ -12,11 +12,20 @@ def link_file_to_home(filename, needs_dot=True):
         prefix += '.'
         destination = os.path.expanduser(prefix + filename)
 
+    print()
     print('{src}[{src_good}] to {dest}[{dest_good}]'.format(
         src=config_file,
         src_good=os.path.isfile(config_file),
         dest=destination,
         dest_good=os.path.isfile(destination)))
-    os.symlink(config_file, destination)
+    try:
+        os.symlink(config_file, destination)
+    except OSError as ex:
+        print(ex)
+        print('If file already then we might already the symlink.')
+
+    print('desired: {path} -> {realpath}'.format(path=destination, realpath=os.path.realpath(destination)))
+    print('actual:  {path} -> {realpath}'.format(path=destination, realpath=config_file))
 
 link_file_to_home('spacemacs')
+link_file_to_home('emacs.d')
