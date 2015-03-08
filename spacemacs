@@ -1,6 +1,7 @@
 ;; -*- mode: dotspacemacs -*-
-;; This file is loaded by Spacemacs at startup.
+;; Loaded by Spacemacs at startup.
 ;; It must be stored in your home directory.
+;; Quick jump here with SPC f e d (file edit dot)
 
 (defun dotspacemacs/layers ()
   "Configuration Layers declaration."
@@ -11,12 +12,18 @@
    ;; List of configuration layers to load. If it is the symbol `all' instead
    ;; of a list then all discovered layers will be installed.
    dotspacemacs-configuration-layers '(
-                                       git
+                                       (git :variables
+                                            git-enable-github-support t)
+                                       c-c++
+                                       csharp
                                        markdown
                                        python
                                        )
    ;; A list of packages and/or extensions that will not be install and loaded.
-   dotspacemacs-excluded-packages '()
+   dotspacemacs-excluded-packages '(
+                                    ace-jump
+                                    evil-escape
+                                    )
    ;; If non-nil spacemacs will delete any orphan packages, i.e. packages that
    ;; are declared in a layer which is not a member of
    ;; the list `dotspacemacs-configuration-layers'
@@ -56,7 +63,7 @@ before layers configuration."
    dotspacemacs-leader-key "SPC"
    ;; Major mode leader key is a shortcut key which is the equivalent of
    ;; pressing `<leader> m`
-   dotspacemacs-major-mode-leader-key ","
+   dotspacemacs-major-mode-leader-key "\\"
    ;; The command key used for Evil commands (ex-commands) and
    ;; Emacs commands (M-x).
    ;; By default the command key is `:' so ex-commands are executed like in Vim
@@ -104,11 +111,34 @@ before layers configuration."
   ;; User initialization goes here
   )
 
+(defun evil-david-paste-from-clipboard
+  (evil-paste-from-register "*")
+  )
+
 (defun dotspacemacs/config ()
   "Configuration function.
  This function is called at the very end of Spacemacs initialization after
 layers configuration."
-)
+  ;; I'm used to c for surround in visual mode.
+  (evil-define-key 'visual evil-surround-mode-map "s" 'evil-substitute)
+  (evil-define-key 'visual evil-surround-mode-map "c" 'evil-surround-region)
+
+  ;; My long-standing confused map. SPC b b does the same thing.
+  (evil-define-key 'normal evil-normal-state-map "^" 'evil-switch-to-windows-last-buffer)
+
+  ;; CUA for some cases and their remappings.
+  (evil-define-key 'normal evil-normal-state-map (kbd "C-q") 'evil-visual-block)
+  (evil-define-key 'normal evil-normal-state-map (kbd "C-v") 'evil-david-paste-from-clipboard)
+
+  (evil-define-key 'normal evil-normal-state-map (kbd "SPC SPC") 'helm-M-x)
+
+  ;; Use something vertical. bar is also nice.
+  (setq powerline-default-separator 'box)
+
+  ;; I want to use C-l, but I don't think that's supported. I've disabled evil-escape.
+  (setq-default evil-escape-key-sequence "C-l")
+
+  )
 
 ;; Do not write anything past this comment. This is where Emacs will
 ;; auto-generate custom variable definitions.
