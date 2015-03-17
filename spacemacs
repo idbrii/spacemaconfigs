@@ -13,15 +13,15 @@
    ;; of a list then all discovered layers will be installed.
    dotspacemacs-configuration-layers '(
                                        (git :variables
-                                            git-enable-github-support t)
-                                       c-c++
+                                            git-enable-github-support nil) ;; requires github login
+                                       ;; This layer is broken see #790: c-c++
                                        csharp
                                        markdown
                                        python
                                        )
    ;; A list of packages and/or extensions that will not be install and loaded.
    dotspacemacs-excluded-packages '(
-                                    ace-jump
+                                    ace-jump-mode
                                     evil-escape
                                     )
    ;; If non-nil spacemacs will delete any orphan packages, i.e. packages that
@@ -89,11 +89,11 @@ before layers configuration."
    ;; A value from the range (0..100), in increasing opacity, which describes
    ;; the transparency level of a frame when it's active or selected.
    ;; Transparency can be toggled through `toggle-transparency'.
-   dotspacemacs-active-transparency 90
+   dotspacemacs-active-transparency 100
    ;; A value from the range (0..100), in increasing opacity, which describes
    ;; the transparency level of a frame when it's inactive or deselected.
    ;; Transparency can be toggled through `toggle-transparency'.
-   dotspacemacs-inactive-transparency 90
+   dotspacemacs-inactive-transparency 50
    ;; If non nil unicode symbols are displayed in the mode line.
    dotspacemacs-mode-line-unicode-symbols t
    ;; If non nil smooth scrolling (native-scrolling) is enabled. Smooth
@@ -111,32 +111,89 @@ before layers configuration."
   ;; User initialization goes here
   )
 
-(defun evil-david-paste-from-clipboard
-  (evil-paste-from-register "*")
-  )
+(defmacro evil-leader-nmap (key command)
+  `(evil-leader/set-key ,key ,command))
+
+(defmacro evil-map (mode key command)
+  `(define-key ,mode (kbd ,key) ,command))
+
+(defmacro evil-vmap (key command)
+  `(evil-map evil-visual-state-map ,key ,command))
+
+(defmacro evil-nmap (key command)
+  `(evil-map evil-normal-state-map ,key ,command)
+  `(evil-map evil-motion-state-map ,key ,command))
+
+(defmacro evil-imap (key command)
+  `(evil-map evil-insert-state-map ,key ,command))
+
+
+(defun evil-david-paste-from-clipboard ()
+  (interactive)
+  (evil-paste-from-register "*"))
+
+;; Act like my vim Ctrl-L
+(defun evil-david-clear-screen ()
+  (interactive)
+  (evil-normal-state)
+  (evil-search-highlight-persist-remove-all)
+  (redraw-display))
 
 (defun dotspacemacs/config ()
   "Configuration function.
- This function is called at the very end of Spacemacs initialization after
-layers configuration."
+  This function is called at the very end of Spacemacs initialization after
+  layers configuration."
+
+  ;; Settings
+
+  ;; Use something vertical. bar is also nice.
+  (setq powerline-default-separator 'box)
+
+  ;; Follow symlinks automatically.
+  (setq vc-follow-symlinks t)
+
+  ;; Vim-style no clipboard modification
+  ;;(setq x-select-enable-clipboard nil)
+
+  ;; Map config
+
+  ;; I want to use C-l, but I don't think that's supported. I've disabled evil-escape.
+  ;;(setq-default evil-escape-key-sequence "C-l")
+
+  ;; Map plugins
+
+  ;; Standard readline please.
+  (define-key helm-map (kbd "C-w") 'backward-kill-word)
+  ;; helm-yank-text-at-point is like getting a word
+  ;;(global-unset-key (kbd "C-r")) ;; Remove the old keybinding
+  ;;(define-key helm-map (kbd "C-r w") 'helm-yank-text-at-point)
+  ;; Alt-r is the closest I can get to Ctrl-r
+  ;;(define-key helm-map (kbd "M-r w") 'helm-yank-text-at-point)
+
+  ;; Map Evil
+
+  ;; More useful double leader.
+  (evil-leader-nmap "SPC" 'helm-M-x)
+
   ;; I'm used to c for surround in visual mode.
   (evil-define-key 'visual evil-surround-mode-map "s" 'evil-substitute)
   (evil-define-key 'visual evil-surround-mode-map "c" 'evil-surround-region)
 
   ;; My long-standing confused map. SPC b b does the same thing.
-  (evil-define-key 'normal evil-normal-state-map "^" 'evil-switch-to-windows-last-buffer)
+  ;;(evil-define-key 'normal evil-normal-state-map "^" 'evil-switch-to-windows-last-buffer)
+  (evil-nmap "^" 'evil-switch-to-windows-last-buffer)
 
   ;; CUA for some cases and their remappings.
-  (evil-define-key 'normal evil-normal-state-map (kbd "C-q") 'evil-visual-block)
-  (evil-define-key 'normal evil-normal-state-map (kbd "C-v") 'evil-david-paste-from-clipboard)
+  (evil-nmap "C-v" 'evil-david-paste-from-clipboard)
+  (evil-nmap "C-q" 'evil-visual-block)
 
-  (evil-define-key 'normal evil-normal-state-map (kbd "SPC SPC") 'helm-M-x)
+  (evil-vmap "g *" 'evil-visualstar/begin-search-forward)
 
-  ;; Use something vertical. bar is also nice.
-  (setq powerline-default-separator 'box)
+  (global-unset-key (kbd "C-l")) ;; Remove the old keybinding
+  (evil-nmap "C-l" 'evil-david-clear-screen)
+  (evil-imap "C-l" 'evil-david-clear-screen)
 
-  ;; I want to use C-l, but I don't think that's supported. I've disabled evil-escape.
-  (setq-default evil-escape-key-sequence "C-l")
+  (evil-leader-nmap "g i" 'magit-status)
 
   )
 
