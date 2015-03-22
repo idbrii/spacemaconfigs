@@ -111,21 +111,21 @@ before layers configuration."
   ;; User initialization goes here
   )
 
-(defmacro evil-leader-nmap (key command)
-  `(evil-leader/set-key ,key ,command))
+(defsubst evil-leader-nmap (key command)
+  (evil-leader/set-key key command))
 
-(defmacro evil-map (mode key command)
-  `(define-key ,mode (kbd ,key) ,command))
+(defsubst evil-map (mode key command)
+  (define-key mode (kbd key) command))
 
-(defmacro evil-vmap (key command)
-  `(evil-map evil-visual-state-map ,key ,command))
+(defsubst evil-vmap (key command)
+  (evil-map evil-visual-state-map key command))
 
-(defmacro evil-nmap (key command)
-  `(evil-map evil-normal-state-map ,key ,command)
-  `(evil-map evil-motion-state-map ,key ,command))
+(defsubst evil-nmap (key command)
+  (evil-map evil-normal-state-map key command)
+  (evil-map evil-motion-state-map key command))
 
-(defmacro evil-imap (key command)
-  `(evil-map evil-insert-state-map ,key ,command))
+(defsubst evil-imap (key command)
+  (evil-map evil-insert-state-map key command))
 
 
 (defun evil-david-paste-from-clipboard ()
@@ -163,7 +163,7 @@ before layers configuration."
   ;; Map plugins
 
   ;; Standard readline please.
-  (define-key helm-map (kbd "C-w") 'backward-kill-word)
+  ;;(define-key helm-map (kbd "C-w") 'backward-kill-word)
   ;; helm-yank-text-at-point is like getting a word
   ;;(global-unset-key (kbd "C-r")) ;; Remove the old keybinding
   ;;(define-key helm-map (kbd "C-r w") 'helm-yank-text-at-point)
@@ -195,6 +195,11 @@ before layers configuration."
 
   (evil-leader-nmap "g i" 'magit-status)
 
+  ;; TODO: most of my maps are only active if I manually source this file.
+
+  ;; TODO: Figure these out:
+  ;;(evil-leader-nmap "w q" 'quit)
+  ;;(evil-leader-nmap "w o" 'only)
   )
 
 ;; Do not write anything past this comment. This is where Emacs will
