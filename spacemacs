@@ -211,10 +211,15 @@ before layers configuration."
   (evil-nmap "C-l" 'evil-david-clear-screen)
   (evil-imap "C-l" 'evil-david-clear-screen)
 
+
+  ;; Source Control
+
   ;; TODO: Make commits verbose by default
   ;; Howto that causes me errors: http://emacs.stackexchange.com/questions/3893/how-can-i-make-verbose-flag-be-enabled-by-default-in-magit-commit-screen
   (evil-leader-nmap "g i" 'magit-status)
-  (evil-leader-nmap "g d" 'vc-diff)
+  (evil-leader-nmap "g d" 'vc-ediff)
+  ;; Split ediff windows based on window size.
+  (setq ediff-split-window-function 'split-window-sensibly)
 
   ;; TODO: most of my maps are only active if I manually source this file.
 
