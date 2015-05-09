@@ -202,6 +202,8 @@ before layers configuration."
 
   ;; Fast replace. Use C-q C-j to insert newlines: http://stackoverflow.com/a/22443616/79125
   ;; Emacs C-q is for literal insertion like vim C-v.
+  ;; TODO: Use vim's 'wrapscan' behavior:
+  ;; http://unix.stackexchange.com/questions/48289/emacs-m-x-query-replace-wrap-around-the-document
   (evil-nmap "g s" 'query-replace-regexp)
   (evil-vmap "g s" 'query-replace-regexp)
 
@@ -209,7 +211,10 @@ before layers configuration."
   (evil-nmap "C-l" 'evil-david-clear-screen)
   (evil-imap "C-l" 'evil-david-clear-screen)
 
+  ;; TODO: Make commits verbose by default
+  ;; Howto that causes me errors: http://emacs.stackexchange.com/questions/3893/how-can-i-make-verbose-flag-be-enabled-by-default-in-magit-commit-screen
   (evil-leader-nmap "g i" 'magit-status)
+  (evil-leader-nmap "g d" 'vc-diff)
 
   ;; TODO: most of my maps are only active if I manually source this file.
 
