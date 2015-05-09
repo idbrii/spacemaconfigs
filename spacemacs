@@ -1,4 +1,5 @@
 ;; -*- mode: dotspacemacs -*-
+;; vim: set ft=lisp :
 ;; Loaded by Spacemacs at startup.
 ;; It must be stored in your home directory.
 ;; Quick jump here with SPC f e d (file edit dot)
@@ -128,6 +129,11 @@ before layers configuration."
   (evil-map evil-insert-state-map key command))
 
 
+(defun evil-copy-to-end-of-line ()
+  "From http://mattbriggs.net/blog/2012/02/27/awesome-emacs-plugins-evil-mode/"
+  (interactive)
+  (evil-yank (point) (point-at-eol)))
+
 (defun evil-david-paste-from-clipboard ()
   (interactive)
   (evil-paste-from-register "*"))
@@ -179,6 +185,9 @@ before layers configuration."
   (evil-define-key 'visual evil-surround-mode-map "s" 'evil-substitute)
   (evil-define-key 'visual evil-surround-mode-map "c" 'evil-surround-region)
 
+  ;; nnoremap Y y$
+  (evil-nmap "Y" 'evil-copy-to-end-of-line)
+
   ;; My long-standing confused map. SPC b b does the same thing.
   ;;(evil-define-key 'normal evil-normal-state-map "^" 'evil-switch-to-windows-last-buffer)
   (evil-nmap "^" 'evil-switch-to-windows-last-buffer)
@@ -188,6 +197,11 @@ before layers configuration."
   (evil-nmap "C-q" 'evil-visual-block)
 
   (evil-vmap "g *" 'evil-visualstar/begin-search-forward)
+
+  ;; Fast replace. Use C-q C-j to insert newlines: http://stackoverflow.com/a/22443616/79125
+  ;; Emacs C-q is for literal insertion like vim C-v.
+  (evil-nmap "g s" 'query-replace-regexp)
+  (evil-vmap "g s" 'query-replace-regexp)
 
   (global-unset-key (kbd "C-l")) ;; Remove the old keybinding
   (evil-nmap "C-l" 'evil-david-clear-screen)
