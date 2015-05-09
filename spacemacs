@@ -189,13 +189,15 @@ before layers configuration."
   (evil-nmap "Y" 'evil-copy-to-end-of-line)
 
   ;; My long-standing confused map. SPC b b does the same thing.
-  ;;(evil-define-key 'normal evil-normal-state-map "^" 'evil-switch-to-windows-last-buffer)
   (evil-nmap "^" 'evil-switch-to-windows-last-buffer)
 
   ;; CUA for some cases and their remappings.
   (evil-nmap "C-v" 'evil-david-paste-from-clipboard)
   (evil-nmap "C-q" 'evil-visual-block)
 
+  ;; Retain * behavior in visual mode and use g* to search for selection.
+  ;; TODO: Does search without word boundaries. That's close, but not quite the same.
+  (evil-vmap "*" 'evil-search-unbounded-word-forward)
   (evil-vmap "g *" 'evil-visualstar/begin-search-forward)
 
   ;; Fast replace. Use C-q C-j to insert newlines: http://stackoverflow.com/a/22443616/79125
