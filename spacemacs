@@ -188,6 +188,9 @@ before layers configuration."
   ;; nnoremap Y y$
   (evil-nmap "Y" 'evil-copy-to-end-of-line)
 
+  ;; Formatting without moving cursor
+  (evil-nmap "Q" 'evil-fill)
+
   ;; My long-standing confused map. SPC b b does the same thing.
   (evil-nmap "^" 'evil-switch-to-windows-last-buffer)
 
