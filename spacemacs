@@ -230,6 +230,17 @@ before layers configuration."
   (evil-leader-nmap "g d" 'vc-ediff)
   ;; Split ediff windows based on window size.
   (setq ediff-split-window-function 'split-window-sensibly)
+  ;; Top/bottom split doesn't work without multiframe.
+  (setq ediff-window-setup-function 'ediff-setup-windows-multiframe)
+
+  ;; Use jk to move up and down and hl to copy text left and right.
+  ;; via http://oremacs.com/2015/01/17/setting-up-ediff/
+  (defun david-ediff-hook ()
+    (define-key ediff-mode-map "j" 'ediff-next-difference)
+    (define-key ediff-mode-map "k" 'ediff-previous-difference)
+    (define-key ediff-mode-map "l" 'ediff-copy-A-to-B)
+    (define-key ediff-mode-map "h" 'ediff-copy-B-to-A))
+  (add-hook 'ediff-keymap-setup-hook 'david-ediff-hook)
 
   ;; TODO: most of my maps are only active if I manually source this file.
 
