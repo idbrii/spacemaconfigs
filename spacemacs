@@ -19,6 +19,7 @@
                                        auto-completion
                                        better-defaults
                                        csharp
+                                       golden-ratio
                                        markdown
                                        org
                                        python
@@ -242,11 +243,27 @@ before layers configuration."
     (define-key ediff-mode-map "h" 'ediff-copy-B-to-A))
   (add-hook 'ediff-keymap-setup-hook 'david-ediff-hook)
 
-  ;; TODO: most of my maps are only active if I manually source this file.
+  ;; Window management
 
-  ;; TODO: Figure these out:
-  ;;(evil-leader-nmap "w q" 'quit)
-  ;;(evil-leader-nmap "w o" 'only)
+  (evil-leader-nmap "w o" 'delete-other-windows)
+  (evil-leader-nmap "w q" 'evil-window-delete)
+  (evil-nmap "C-w q" 'evil-window-delete) ;; Not sure why this isn't defined already.
+
+  ;; TODO: david-golden-ratio-adjust doesn't work until you toggle golden ratio
+  ;; with SPC t g: #1551
+  (defsubst david-golden-ratio-adjust ()
+    "Invoke golden-ratio with default adjustment ratio."
+    (interactive)
+    (golden-ratio-adjust golden-ratio-adjust-factor))
+  (evil-leader-nmap "w -" 'david-golden-ratio-adjust)
+  (evil-nmap "C-w -" 'david-golden-ratio-adjust)
+
+  (evil-leader-nmap "w +" 'maximize-window)
+  (evil-nmap "C-w +" 'maximize-window)
+
+
+  ;; TODO: some of my maps are only active if I manually source this file.
+
   )
 
 ;; Do not write anything past this comment. This is where Emacs will
