@@ -23,6 +23,8 @@
                                        org
                                        python
                                        syntax-checking
+                                       visual-regexp
+                                       visual-regexp-steroids
                                        )
    ;; A list of packages and/or extensions that will not be install and loaded.
    dotspacemacs-excluded-packages '(
@@ -211,8 +213,9 @@ before layers configuration."
   ;; Emacs C-q is for literal insertion like vim C-v.
   ;; TODO: Use vim's 'wrapscan' behavior:
   ;; http://unix.stackexchange.com/questions/48289/emacs-m-x-query-replace-wrap-around-the-document
-  (evil-nmap "g s" 'query-replace-regexp)
-  (evil-vmap "g s" 'query-replace-regexp)
+  (evil-nmap "g s" 'vr/query-replace)
+  (evil-vmap "g s" 'vr/query-replace)
+
 
   (global-unset-key (kbd "C-l")) ;; Remove the old keybinding
   (evil-nmap "C-l" 'evil-david-clear-screen)
