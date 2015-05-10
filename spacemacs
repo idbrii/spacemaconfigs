@@ -16,9 +16,13 @@
                                        (git :variables
                                             git-enable-github-support nil) ;; requires github login
                                        ;; This layer is broken see #790: c-c++
+                                       auto-completion
+                                       better-defaults
                                        csharp
                                        markdown
+                                       org
                                        python
+                                       syntax-checking
                                        )
    ;; A list of packages and/or extensions that will not be install and loaded.
    dotspacemacs-excluded-packages '(
