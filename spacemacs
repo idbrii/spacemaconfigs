@@ -159,11 +159,21 @@ before layers configuration."
 
   ;; Settings
 
+  ;; Show file info instead of emacs info.
+  (setq frame-title-format "%b (%f)")
+
   ;; Use something vertical. bar is also nice.
   (setq powerline-default-separator 'box)
 
   ;; Follow symlinks automatically.
   (setq vc-follow-symlinks t)
+
+  (defun nox/show-startup-time ()
+    "Show Emacs's startup time in the minibuffer
+    via https://github.com/noahfrederick/dots/blob/master/emacs.d/emacs.org"
+    (message "Startup time: %s seconds."
+             (emacs-uptime "%s")))
+  (add-hook 'emacs-startup-hook 'nox/show-startup-time 'append)
 
   ;; Vim-style no clipboard modification
   ;;(setq x-select-enable-clipboard nil)
