@@ -198,6 +198,32 @@ before layers configuration."
   ;; More useful double leader.
   (evil-leader-nmap "SPC" 'helm-M-x)
 
+
+  ;; File jumping
+
+  ;; This could be a function if I used and understood lexical-binding.
+  (defmacro david-switch-to-buffer (buffername filename)
+    "Create a function that will switch to the given buffer
+    via http://stackoverflow.com/q/660555/79125"
+    (let ((funsymbol (intern (concat "david-switch-to-" buffername))))
+      `(defun ,funsymbol ()
+         (interactive)
+         (find-file ,filename))))
+
+  (evil-leader-nmap "f a" (david-switch-to-buffer "aside" "~/.vim-aside"))
+  (evil-leader-nmap "f e t" (david-switch-to-buffer "vimusers-tutorial" "~/data/settings/spacemaconfigs/emacs.d/doc/VIMUSERS.md"))
+
+
+  ;; vim-vinegar
+  ;; via https://github.com/noahfrederick/dots/blob/master/emacs.d/emacs.org
+  (autoload 'dired-jump "dired-x"
+    "Jump to Dired buffer corresponding to current buffer." t)
+  (evil-nmap "-" 'dired-jump)
+  (evil-define-key 'normal dired-mode-map "-" 'dired-up-directory)
+
+
+  ;; Vim consistency
+
   ;; I'm used to c for surround in visual mode.
   (evil-define-key 'visual evil-surround-mode-map "s" 'evil-substitute)
   (evil-define-key 'visual evil-surround-mode-map "c" 'evil-surround-region)
@@ -207,6 +233,9 @@ before layers configuration."
 
   ;; Formatting without moving cursor
   (evil-nmap "Q" 'evil-fill)
+
+
+  ;; My vim quirks
 
   ;; My long-standing confused map. SPC b b does the same thing.
   (evil-nmap "^" 'evil-switch-to-windows-last-buffer)
