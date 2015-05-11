@@ -249,8 +249,9 @@ before layers configuration."
   (evil-leader-nmap "w q" 'evil-window-delete)
   (evil-nmap "C-w q" 'evil-window-delete) ;; Not sure why this isn't defined already.
 
-  ;; TODO: david-golden-ratio-adjust doesn't work until you toggle golden ratio
-  ;; with SPC t g: #1551
+  ;; golden-ratio-adjust requires golden ratio to be loaded, so require
+  ;; it. Ref syl20bnr/spacemacs#1551.
+  (require 'golden-ratio)
   (defsubst david-golden-ratio-adjust ()
     "Invoke golden-ratio with default adjustment ratio."
     (interactive)
