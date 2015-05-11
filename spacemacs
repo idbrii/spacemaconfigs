@@ -175,6 +175,11 @@ before layers configuration."
              (emacs-uptime "%s")))
   (add-hook 'emacs-startup-hook 'nox/show-startup-time 'append)
 
+  ;; I never want to use emacs-style i-search. C-s is too valuable when I can
+  ;; use evil and keeping it around is too confusing.
+  (global-unset-key (kbd "C-r")) ;; necessary for helm remapping
+  (global-unset-key (kbd "C-s"))
+
   ;; Vim-style no clipboard modification
   ;;(setq x-select-enable-clipboard nil)
 
@@ -185,13 +190,23 @@ before layers configuration."
 
   ;; Map plugins
 
-  ;; Standard readline please.
-  ;;(define-key helm-map (kbd "C-w") 'backward-kill-word)
-  ;; helm-yank-text-at-point is like getting a word
-  ;;(global-unset-key (kbd "C-r")) ;; Remove the old keybinding
-  ;;(define-key helm-map (kbd "C-r w") 'helm-yank-text-at-point)
-  ;; Alt-r is the closest I can get to Ctrl-r
-  ;;(define-key helm-map (kbd "M-r w") 'helm-yank-text-at-point)
+  (defun david-minibuffer-hook ()
+    "Make minibuffer work more like readline and vim."
+    (define-key helm-map (kbd "C-w") 'backward-kill-word)
+    (define-key helm-map (kbd "C-u") 'backward-kill-paragraph)
+    ;; helm-yank-text-at-point is like getting a word
+    ;; (local-unset-key (kbd "C-r")) ;; Remove the old keybinding to prevent prefix errors
+    ;; (define-key helm-map (kbd "C-r") nil)
+    ;; (define-key helm-map (kbd "C-r w") 'helm-yank-text-at-point)
+    ;; TODO: These probably need an association with helm-map.
+    (define-prefix-command 'minibuffer-vimlike-map)
+    ;;(global-set-key (kbd "C-r") 'minibuffer-vimlike-map)
+    ;;(define-key minibuffer-vimlike-map (kbd "C-r w") 'helm-yank-text-at-point)
+    ;;(define-key minibuffer-vimlike-map (kbd "C-r \"") 'evil-paste-after)
+    ;;(define-key minibuffer-vimlike-map (kbd "C-r '") 'evil-paste-after)
+    ;;(define-key minibuffer-vimlike-map (kbd "C-r 0") 'evil-paste-yanked-after)
+    )
+  (add-hook 'minibuffer-setup-hook 'david-minibuffer-hook)
 
   ;; Map Evil
 
