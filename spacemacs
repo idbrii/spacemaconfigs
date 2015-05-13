@@ -238,6 +238,11 @@ before layers configuration."
 
   (add-hook 'minibuffer-setup-hook 'david-minibuffer-hook)
 
+  ;;TODO: Check out hydra to make helm more like unite:
+  ;; http://angelic-sedition.github.io/blog/2015/02/03/a-more-evil-helm/
+  ;; http://tuhdo.github.io/helm-intro.html#comment-1837294013
+
+
   ;; Map Evil
 
   ;; More useful double leader.
