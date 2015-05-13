@@ -322,6 +322,17 @@ before layers configuration."
   (evil-nmap "C-l" 'evil-david-clear-screen)
   (evil-imap "C-l" 'evil-david-clear-screen)
 
+  ;; TODO: This doesn't work at all. No idea how to fix it.
+  ;; nnoremap <Leaderp "0p
+  ;;(defsubst evil-paste-yanked-before (COUNT &optional REGISTER YANK-HANDLER)
+  ;;  (evil-paste-before COUNT "0" YANK-HANDLER))
+  ;;(defsubst evil-paste-yanked-after (COUNT &optional REGISTER YANK-HANDLER)
+  ;;  (evil-paste-after COUNT "0" YANK-HANDLER))
+  ;;(evil-leader-nmap "P" 'evil-paste-yanked-before)
+  ;;(evil-leader-nmap "p" 'evil-paste-yanked-after)
+  ;;(evil-leader-vmap "P" 'evil-paste-yanked-before)
+  ;;(evil-leader-vmap "p" 'evil-paste-yanked-after)
+
 
   ;; Source Control
 
