@@ -297,9 +297,9 @@ before layers configuration."
 
   ;; Source Control
 
-  ;; TODO: Make commits verbose by default
-  ;; Howto that causes me errors: http://emacs.stackexchange.com/questions/3893/how-can-i-make-verbose-flag-be-enabled-by-default-in-magit-commit-screen
   (evil-leader-nmap "g i" 'magit-status)
+  ;; Expand diff in status window when committing. (Like verbose commits.)
+  (setq magit-expand-staged-on-commit 'full)
   (evil-leader-nmap "g d" 'vc-ediff)
   ;; Split ediff windows based on window size.
   (setq ediff-split-window-function 'split-window-sensibly)
@@ -314,6 +314,7 @@ before layers configuration."
     (define-key ediff-mode-map "l" 'ediff-copy-A-to-B)
     (define-key ediff-mode-map "h" 'ediff-copy-B-to-A))
   (add-hook 'ediff-keymap-setup-hook 'david-ediff-hook)
+
 
   ;; Window management
 
