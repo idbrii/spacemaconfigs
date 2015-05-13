@@ -119,21 +119,26 @@ before layers configuration."
   ;; User initialization goes here
   )
 
-(defsubst evil-leader-nmap (key command)
+(defsubst evil-leader-nbind (key command)
+  "evil-leader-nbind is a convenience function to bind normal mode leader keys
+    to emacs functions."
   (evil-leader/set-key key command))
 
-(defsubst evil-map (mode key command)
+(defsubst evil-bind (mode key command)
+  "evil-bind is a convenience function to bind keys to emacs functions.
+
+    See also evil-map to do vim-like remappings of keys."
   (define-key mode (kbd key) command))
 
-(defsubst evil-vmap (key command)
-  (evil-map evil-visual-state-map key command))
+(defsubst evil-vbind (key command)
+  (evil-bind evil-visual-state-map key command))
 
-(defsubst evil-nmap (key command)
-  (evil-map evil-normal-state-map key command)
-  (evil-map evil-motion-state-map key command))
+(defsubst evil-nbind (key command)
+  (evil-bind evil-normal-state-map key command)
+  (evil-bind evil-motion-state-map key command))
 
-(defsubst evil-imap (key command)
-  (evil-map evil-insert-state-map key command))
+(defsubst evil-ibind (key command)
+  (evil-bind evil-insert-state-map key command))
 
 
 (defun evil-copy-to-end-of-line ()
@@ -206,7 +211,7 @@ before layers configuration."
     (if (get-buffer undo-tree-visualizer-buffer-name)
         (undo-tree-visualizer-quit)
       (undo-tree-visualize)))
-  (evil-nmap "<f2>" 'undo-tree-visualizer-toggle)
+  (evil-nbind "<f2>" 'undo-tree-visualizer-toggle)
 
   ;; Readline support
   (defun backward-kill-line ()
@@ -215,7 +220,7 @@ before layers configuration."
     (interactive)
     (undo-boundary)
     (kill-line 0))
-  (evil-imap "C-u" 'backward-kill-line)
+  (evil-ibind "C-u" 'backward-kill-line)
 
   ;; I use helm functions below so make sure it's loaded.
   (require 'helm)
@@ -246,7 +251,7 @@ before layers configuration."
   ;; Map Evil
 
   ;; More useful double leader.
-  (evil-leader-nmap "SPC" 'helm-M-x)
+  (evil-leader-nbind "SPC" 'helm-M-x)
 
 
   ;; File jumping
@@ -260,15 +265,15 @@ before layers configuration."
          (interactive)
          (find-file ,filename))))
 
-  (evil-leader-nmap "f a" (david-switch-to-buffer "aside" "~/.vim-aside"))
-  (evil-leader-nmap "f e t" (david-switch-to-buffer "vimusers-tutorial" "~/data/settings/spacemaconfigs/emacs.d/doc/VIMUSERS.md"))
+  (evil-leader-nbind "f a" (david-switch-to-buffer "aside" "~/.vim-aside"))
+  (evil-leader-nbind "f e t" (david-switch-to-buffer "vimusers-tutorial" "~/data/settings/spacemaconfigs/emacs.d/doc/VIMUSERS.md"))
 
 
   ;; vim-vinegar
   ;; via https://github.com/noahfrederick/dots/blob/master/emacs.d/emacs.org
   (autoload 'dired-jump "dired-x"
     "Jump to Dired buffer corresponding to current buffer." t)
-  (evil-nmap "-" 'dired-jump)
+  (evil-nbind "-" 'dired-jump)
   (evil-define-key 'normal dired-mode-map "-" 'dired-up-directory)
 
 
@@ -290,41 +295,41 @@ before layers configuration."
   (evil-define-key 'visual evil-surround-mode-map "c" 'evil-surround-region)
 
   ;; nnoremap Y y$
-  (evil-nmap "Y" 'evil-copy-to-end-of-line)
+  (evil-nbind "Y" 'evil-copy-to-end-of-line)
 
   ;; Formatting without moving cursor
-  (evil-nmap "Q" 'evil-fill)
+  (evil-nbind "Q" 'evil-fill)
 
 
   ;; My vim quirks
 
   ;; My long-standing confused map. SPC b b does the same thing.
-  (evil-nmap "^" 'evil-switch-to-windows-last-buffer)
+  (evil-nbind "^" 'evil-switch-to-windows-last-buffer)
 
   ;; CUA for some cases and their remappings.
-  (evil-nmap "C-v" 'evil-david-paste-from-clipboard)
-  (evil-nmap "C-q" 'evil-visual-block)
+  (evil-nbind "C-v" 'evil-david-paste-from-clipboard)
+  (evil-nbind "C-q" 'evil-visual-block)
 
   ;; gc selects previously changed text. (|gv| but for modification.)
   ;; via http://juanjoalvarez.net/es/detail/2014/sep/19/vim-emacsevil-chaotic-migration-guide/
-  (evil-nmap "g c" 'exchange-point-and-mark)
+  (evil-nbind "g c" 'exchange-point-and-mark)
 
   ;; Retain * behavior in visual mode and use g* to search for selection.
   ;; TODO: Does search without word boundaries. That's close, but not quite the same.
-  (evil-vmap "*" 'evil-search-unbounded-word-forward)
-  (evil-vmap "g *" 'evil-visualstar/begin-search-forward)
+  (evil-vbind "*" 'evil-search-unbounded-word-forward)
+  (evil-vbind "g *" 'evil-visualstar/begin-search-forward)
 
   ;; Fast replace. Use C-q C-j to insert newlines: http://stackoverflow.com/a/22443616/79125
   ;; Emacs C-q is for literal insertion like vim C-v.
   ;; TODO: Use vim's 'wrapscan' behavior:
   ;; http://unix.stackexchange.com/questions/48289/emacs-m-x-query-replace-wrap-around-the-document
-  (evil-nmap "g s" 'vr/query-replace)
-  (evil-vmap "g s" 'vr/query-replace)
+  (evil-nbind "g s" 'vr/query-replace)
+  (evil-vbind "g s" 'vr/query-replace)
 
 
   (global-unset-key (kbd "C-l")) ;; Remove the old keybinding
-  (evil-nmap "C-l" 'evil-david-clear-screen)
-  (evil-imap "C-l" 'evil-david-clear-screen)
+  (evil-nbind "C-l" 'evil-david-clear-screen)
+  (evil-ibind "C-l" 'evil-david-clear-screen)
 
   ;; TODO: This doesn't work at all. No idea how to fix it.
   ;; nnoremap <Leaderp "0p
@@ -332,18 +337,18 @@ before layers configuration."
   ;;  (evil-paste-before COUNT "0" YANK-HANDLER))
   ;;(defsubst evil-paste-yanked-after (COUNT &optional REGISTER YANK-HANDLER)
   ;;  (evil-paste-after COUNT "0" YANK-HANDLER))
-  ;;(evil-leader-nmap "P" 'evil-paste-yanked-before)
-  ;;(evil-leader-nmap "p" 'evil-paste-yanked-after)
+  ;;(evil-leader-nbind "P" 'evil-paste-yanked-before)
+  ;;(evil-leader-nbind "p" 'evil-paste-yanked-after)
   ;;(evil-leader-vmap "P" 'evil-paste-yanked-before)
   ;;(evil-leader-vmap "p" 'evil-paste-yanked-after)
 
 
   ;; Source Control
 
-  (evil-leader-nmap "g i" 'magit-status)
+  (evil-leader-nbind "g i" 'magit-status)
   ;; Expand diff in status window when committing. (Like verbose commits.)
   (setq magit-expand-staged-on-commit 'full)
-  (evil-leader-nmap "g d" 'vc-ediff)
+  (evil-leader-nbind "g d" 'vc-ediff)
   ;; Split ediff windows based on window size.
   (setq ediff-split-window-function 'split-window-sensibly)
   ;; Top/bottom split doesn't work without multiframe.
@@ -361,9 +366,9 @@ before layers configuration."
 
   ;; Window management
 
-  (evil-leader-nmap "w o" 'delete-other-windows)
-  (evil-leader-nmap "w q" 'evil-window-delete)
-  (evil-nmap "C-w q" 'evil-window-delete) ;; Not sure why this isn't defined already.
+  (evil-leader-nbind "w o" 'delete-other-windows)
+  (evil-leader-nbind "w q" 'evil-window-delete)
+  (evil-nbind "C-w q" 'evil-window-delete) ;; Not sure why this isn't defined already.
 
   ;; golden-ratio-adjust requires golden ratio to be loaded, so require
   ;; it. Ref syl20bnr/spacemacs#1551.
@@ -372,11 +377,11 @@ before layers configuration."
     "Invoke golden-ratio with default adjustment ratio."
     (interactive)
     (golden-ratio-adjust golden-ratio-adjust-factor))
-  (evil-leader-nmap "w -" 'david-golden-ratio-adjust)
-  (evil-nmap "C-w -" 'david-golden-ratio-adjust)
+  (evil-leader-nbind "w -" 'david-golden-ratio-adjust)
+  (evil-nbind "C-w -" 'david-golden-ratio-adjust)
 
-  (evil-leader-nmap "w +" 'maximize-window)
-  (evil-nmap "C-w +" 'maximize-window)
+  (evil-leader-nbind "w +" 'maximize-window)
+  (evil-nbind "C-w +" 'maximize-window)
 
 
   ;; TODO: some of my maps are only active if I manually source this file.
