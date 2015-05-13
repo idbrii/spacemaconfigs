@@ -254,6 +254,11 @@ before layers configuration."
   (evil-leader-nbind "SPC" 'helm-M-x)
 
 
+  ;; Navigation
+  (define-key evil-motion-state-map (kbd "<M-up>") 'evil-jump-backward)
+  (define-key evil-motion-state-map (kbd "<M-down>") 'evil-jump-forward)
+
+
   ;; File jumping
 
   ;; This could be a function if I used and understood lexical-binding.
