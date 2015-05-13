@@ -168,6 +168,12 @@ before layers configuration."
   ;; Follow symlinks automatically.
   (setq vc-follow-symlinks t)
 
+  ;; Use the same history for query-replace and regexp-search.
+  ;; via http://emacs.stackexchange.com/questions/12312/how-to-combine-the-history-of-isearch-and-query-replace
+  (setq query-replace-from-history-variable 'regexp-search-ring)
+  ;; Could use the same history for replacement too, but that seems less useful.
+  ;;(setq query-replace-to-history-variable 'regexp-search-ring)
+
   (defun nox/show-startup-time ()
     "Show Emacs's startup time in the minibuffer
     via https://github.com/noahfrederick/dots/blob/master/emacs.d/emacs.org"
