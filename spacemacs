@@ -308,6 +308,11 @@ before layers configuration."
 
   ;; My vim quirks
 
+  ;; Increment/decrement on double chord. I usually use . to repeat and wanted
+  ;; C-a free for select all.
+  (evil-nbind "C-x C-s" 'spacemacs/evil-numbers-increase)
+  (evil-nbind "C-x C-x" 'spacemacs/evil-numbers-decrease)
+
   ;; My long-standing confused map. SPC b b does the same thing.
   (evil-nbind "^" 'evil-switch-to-windows-last-buffer)
 
