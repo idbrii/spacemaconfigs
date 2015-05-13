@@ -208,22 +208,34 @@ before layers configuration."
       (undo-tree-visualize)))
   (evil-nmap "<f2>" 'undo-tree-visualizer-toggle)
 
+  ;; Readline support
+  (defun backward-kill-line ()
+    "Kill from cursor to beginning of line.
+        via http://stackoverflow.com/a/3888306/79125"
+    (interactive)
+    (undo-boundary)
+    (kill-line 0))
+  (evil-imap "C-u" 'backward-kill-line)
+
+  ;; I use helm functions below so make sure it's loaded.
+  (require 'helm)
+  (require 'helm-config)
   (defun david-minibuffer-hook ()
     "Make minibuffer work more like readline and vim."
-    (define-key helm-map (kbd "C-w") 'backward-kill-word)
-    (define-key helm-map (kbd "C-u") 'backward-kill-paragraph)
-    ;; helm-yank-text-at-point is like getting a word
-    ;; (local-unset-key (kbd "C-r")) ;; Remove the old keybinding to prevent prefix errors
-    ;; (define-key helm-map (kbd "C-r") nil)
-    ;; (define-key helm-map (kbd "C-r w") 'helm-yank-text-at-point)
-    ;; TODO: These probably need an association with helm-map.
+    ;; Basic readline.
+    (local-set-key (kbd "C-w") 'backward-kill-word)
+    (local-set-key (kbd "C-u") 'backward-kill-line)
+
+    ;; Vim-like C-r prefix for inserting text.
+    ;; TODO: This doesn't work.
     (define-prefix-command 'minibuffer-vimlike-map)
-    ;;(global-set-key (kbd "C-r") 'minibuffer-vimlike-map)
-    ;;(define-key minibuffer-vimlike-map (kbd "C-r w") 'helm-yank-text-at-point)
-    ;;(define-key minibuffer-vimlike-map (kbd "C-r \"") 'evil-paste-after)
-    ;;(define-key minibuffer-vimlike-map (kbd "C-r '") 'evil-paste-after)
-    ;;(define-key minibuffer-vimlike-map (kbd "C-r 0") 'evil-paste-yanked-after)
-    )
+    (local-set-key (kbd "C-r") 'minibuffer-vimlike-map)
+    ;; helm-yank-text-at-point is like getting a word
+    (define-key minibuffer-vimlike-map (kbd "C-r w") 'helm-yank-text-at-point)
+    (define-key minibuffer-vimlike-map (kbd "C-r \"") 'evil-paste-after)
+    (define-key minibuffer-vimlike-map (kbd "C-r '") 'evil-paste-after)
+    (define-key minibuffer-vimlike-map (kbd "C-r 0") 'evil-paste-yanked-after))
+
   (add-hook 'minibuffer-setup-hook 'david-minibuffer-hook)
 
   ;; Map Evil
