@@ -305,6 +305,10 @@ before layers configuration."
   (evil-nmap "C-v" 'evil-david-paste-from-clipboard)
   (evil-nmap "C-q" 'evil-visual-block)
 
+  ;; gc selects previously changed text. (|gv| but for modification.)
+  ;; via http://juanjoalvarez.net/es/detail/2014/sep/19/vim-emacsevil-chaotic-migration-guide/
+  (evil-nmap "g c" 'exchange-point-and-mark)
+
   ;; Retain * behavior in visual mode and use g* to search for selection.
   ;; TODO: Does search without word boundaries. That's close, but not quite the same.
   (evil-vmap "*" 'evil-search-unbounded-word-forward)
