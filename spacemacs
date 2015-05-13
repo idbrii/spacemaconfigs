@@ -267,6 +267,17 @@ before layers configuration."
   (evil-define-key 'normal dired-mode-map "-" 'dired-up-directory)
 
 
+  ;; vim-surround uses r and a for [] and <>
+  (setq-default evil-surround-pairs-alist
+                (cons
+                 '(?r . ("[" . "]"))
+                 evil-surround-pairs-alist))
+  (setq-default evil-surround-pairs-alist
+                (cons
+                 '(?a . ("<" . ">"))
+                 evil-surround-pairs-alist))
+
+
   ;; Vim consistency
 
   ;; I'm used to c for surround in visual mode.
