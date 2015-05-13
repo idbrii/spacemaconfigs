@@ -168,6 +168,11 @@ before layers configuration."
   ;; Follow symlinks automatically.
   (setq vc-follow-symlinks t)
 
+  ;; Persistent undo
+  ;; via https://plus.google.com/113859563190964307534/posts/JEF3sqRFHVA
+  (setq undo-tree-auto-save-history t
+        undo-tree-history-directory-alist `(("." . ,(expand-file-name "~/.emacs-cache/undo/"))))
+
   ;; Use the same history for query-replace and regexp-search.
   ;; via http://emacs.stackexchange.com/questions/12312/how-to-combine-the-history-of-isearch-and-query-replace
   (setq query-replace-from-history-variable 'regexp-search-ring)
@@ -195,6 +200,13 @@ before layers configuration."
   ;;(setq-default evil-escape-key-sequence "C-l")
 
   ;; Map plugins
+
+  (defun undo-tree-visualizer-toggle ()
+    (interactive)
+    (if (get-buffer undo-tree-visualizer-buffer-name)
+        (undo-tree-visualizer-quit)
+      (undo-tree-visualize)))
+  (evil-nmap "<f2>" 'undo-tree-visualizer-toggle)
 
   (defun david-minibuffer-hook ()
     "Make minibuffer work more like readline and vim."
