@@ -16,7 +16,8 @@
                                        (git :variables
                                             git-enable-github-support nil) ;; requires github login
                                        ;; This layer is broken see #790: c-c++
-                                       auto-completion
+                                       '(auto-completion :variables
+                                                         auto-completion-use-tab-instead-of-enter t)
                                        better-defaults
                                        csharp
                                        golden-ratio
@@ -119,6 +120,22 @@ before layers configuration."
   ;; User initialization goes here
   )
 
+;; This is supposed to be defined somewhere in spacemacs.
+;; via http://emacs.stackexchange.com/a/12303/8283
+(defmacro evil-map (state key seq)
+  "Map for a given STATE a KEY to a sequence SEQ of keys.
+Can handle recursive definition only if KEY is the first key of SEQ.
+Example: (evil-map visual \"<\" \"<gv\")"
+  (let ((map (intern (format "evil-%S-state-map" state))))
+    `(define-key ,map ,key
+       (lambda ()
+         (interactive)
+         ,(if (string-equal key (substring seq 0 1))
+              `(progn
+                 (call-interactively ',(lookup-key evil-normal-state-map key))
+                 (execute-kbd-macro ,(substring seq 1)))
+            (execute-kbd-macro ,seq))))))
+
 (defsubst evil-leader-nbind (key command)
   "evil-leader-nbind is a convenience function to bind normal mode leader keys
     to emacs functions."
@@ -156,6 +173,17 @@ before layers configuration."
   (evil-normal-state)
   (evil-search-highlight-persist-remove-all)
   (redraw-display))
+
+;; shutdown emacs server instance. Used from bash aliases.
+(defun david-server-shutdown ()
+  "Save buffers, Quit, and Shutdown (kill) server.
+    Used from bash aliases to kill or restart emacs."
+  (interactive)
+  (let
+      ;; Ensure we use gui prompts for confirmation.
+      ;; via http://stackoverflow.com/a/2270603/79125
+      ((last-nonmenu-event nil))
+    (save-buffers-kill-emacs)))
 
 (defun dotspacemacs/config ()
   "Configuration function.
@@ -243,6 +271,10 @@ before layers configuration."
 
   (add-hook 'minibuffer-setup-hook 'david-minibuffer-hook)
 
+  ;; Kinda like K for documentation.
+  (define-key helm-map (kbd "C-k") 'helm-execute-persistent-action)
+
+
   ;;TODO: Check out hydra to make helm more like unite:
   ;; http://angelic-sedition.github.io/blog/2015/02/03/a-more-evil-helm/
   ;; http://tuhdo.github.io/helm-intro.html#comment-1837294013
@@ -273,6 +305,8 @@ before layers configuration."
   (evil-leader-nbind "f a" (david-switch-to-buffer "aside" "~/.vim-aside"))
   (evil-leader-nbind "f e t" (david-switch-to-buffer "vimusers-tutorial" "~/data/settings/spacemaconfigs/emacs.d/doc/VIMUSERS.md"))
 
+  (evil-nbind "C-w +" 'maximize-window)
+  (evil-ibind "C-SPC" 'completion-at-point)
 
   ;; vim-vinegar
   ;; via https://github.com/noahfrederick/dots/blob/master/emacs.d/emacs.org
@@ -292,6 +326,7 @@ before layers configuration."
                  '(?a . ("<" . ">"))
                  evil-surround-pairs-alist))
 
+  ;;(evil-map motion "sr" "s[")
 
   ;; Vim consistency
 
