@@ -243,11 +243,6 @@ Example: (evil-map visual \"<\" \"<gv\")"
   (evil-bind evil-insert-state-map key command))
 
 
-(defun evil-copy-to-end-of-line ()
-  "From http://mattbriggs.net/blog/2012/02/27/awesome-emacs-plugins-evil-mode/"
-  (interactive)
-  (evil-yank (point) (point-at-eol)))
-
 (defun evil-david-paste-from-clipboard ()
   (interactive)
   (evil-paste-from-register "*"))
@@ -424,9 +419,6 @@ layers configuration. You are free to put any user code."
   ;; I'm used to c for surround in visual mode.
   (evil-define-key 'visual evil-surround-mode-map "s" 'evil-substitute)
   (evil-define-key 'visual evil-surround-mode-map "c" 'evil-surround-region)
-
-  ;; nnoremap Y y$
-  (evil-nbind "Y" 'evil-copy-to-end-of-line)
 
   ;; Formatting without moving cursor
   (evil-nbind "Q" 'evil-fill)
