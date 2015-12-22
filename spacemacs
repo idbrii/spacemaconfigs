@@ -652,6 +652,10 @@ layers configuration. You are free to put any user code."
   (define-key evil-inner-text-objects-map "." 'evil-textobj-anyblock-inner-block)
   (define-key evil-outer-text-objects-map "." 'evil-textobj-anyblock-a-block)
 
+  ;; vim-argumentative
+  (define-key evil-inner-text-objects-map "," 'evil-inner-arg)
+  (define-key evil-outer-text-objects-map "," 'evil-outer-arg)
+
   ;; My hacked version (see above).
   ;;(define-key evil-inner-text-objects-map "c" 'evil-textobj-word-column-inner-column)
   (define-key evil-inner-text-objects-map "c" 'evil-get-word-column-region)
