@@ -58,6 +58,12 @@ values."
                                       ;; Github example from spacemacs packages.el: (evil-indent-textobject :location (recipe :fetcher github :repo "TheBB/evil-indent-textobject"))
                                       ;; Otherwise, I think I can just put melpa package names here.
 
+                                      ;; Consider https://github.com/luxbock/evil-cleverparens
+                                      (helm-cscope
+                                       :location (recipe
+                                                  :fetcher github
+                                                  :repo "sergey-pashaev/helm-cscope"))
+
                                       evil-textobj-anyblock ;; https://github.com/noctuid/evil-textobj-anyblock
 
                                       ;; Not yet in melpa. evil-textobj-word-column ;; https://github.com/noctuid/evil-textobj-word-column
@@ -66,6 +72,9 @@ values."
                                       ;; :location (recipe
                                       ;;            :fetcher github
                                       ;;            :repo "noctuid/evil-textobj-word-column"))
+
+                                      ;; Doesn't define any functions. Maybe I'm using it wrong. general-close ;; https://github.com/emacs-berlin/general-close
+                                      evil-vimish-fold ;; https://github.com/alexmurray/evil-vimish-fold
                                       )
    ;; A list of packages and/or extensions that will not be install and loaded.
    dotspacemacs-excluded-packages '(
