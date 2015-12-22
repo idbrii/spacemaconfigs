@@ -274,6 +274,10 @@ Example: (evil-map visual \"<\" \"<gv\")"
 (defsubst evil-ibind (key command)
   (evil-bind evil-insert-state-map key command))
 
+(defsubst evil-motion-bind (key command)
+  "Only map to motion-state."
+  (evil-bind evil-motion-state-map key command))
+
 
 (defun evil-david-paste-from-clipboard ()
   (interactive)
@@ -488,8 +492,8 @@ layers configuration. You are free to put any user code."
   (evil-leader-nbind "oy" 'helm-show-kill-ring) ;; history/yank
 
   ;; Navigation
-  (define-key evil-motion-state-map (kbd "<M-up>") 'evil-jump-backward)
-  (define-key evil-motion-state-map (kbd "<M-down>") 'evil-jump-forward)
+  ;;(evil-motion-bind "<M-up>" 'evil-jump-backward)
+  ;;(evil-motion-bind "<M-down>" 'evil-jump-forward)
 
 
   ;; File jumping
