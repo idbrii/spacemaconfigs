@@ -660,6 +660,9 @@ layers configuration. You are free to put any user code."
   ;;(define-key evil-inner-text-objects-map "c" 'evil-textobj-word-column-inner-column)
   (define-key evil-inner-text-objects-map "c" 'evil-get-word-column-region)
 
+  ;;(evil-nbind "c" (let ((map (make-sparse-keymap)))
+                    ;;(evil-bind map "x" 'transpose-sexps)
+                    ;;map))
   ;;(evil-nbind ">" (let ((map (make-sparse-keymap)))
                     ;;(evil-bind map ">," '((forward-sexp) (transpose-sexps)))
                     ;;map))
@@ -667,6 +670,7 @@ layers configuration. You are free to put any user code."
                     ;;(evil-bind map "<," '((backward-sexp) (transpose-sexps)))
                     ;;map))
 
+  ;;(evil-nbind "cx" 'transpose-sexps)
   ;;(evil-nbind ">," '((forward-sexp) (transpose-sexps)))
   ;;(evil-nbind "<," '((backward-sexp) (transpose-sexps)))
 
