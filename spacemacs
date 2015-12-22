@@ -612,6 +612,17 @@ layers configuration. You are free to put any user code."
   ;; TODO Found gx here. look for more https://github.com/justinmk/config/blob/master/.emacs.d/elisp/init-bindings.el
   ;;(evil-nbind "gx" 'browse-url-at-point)
 
+
+  ;; TODO: Add ability to toggle highlights like vim-mark.
+  ;;(defun toggle-highlight ()
+  ;;  "Behave roughly like idbrii/vim-mark
+  ;;      via http://stackoverflow.com/a/427047/79125"
+  ;;  (interactive)
+  ;;  ;; highlight-phrase
+  ;;  ;; highlight-changes-remove-highlight
+  ;;  )
+  ;; (evil-leader-nbind "hh" highlight-phrase)
+
   ;; Textobjs
   ;; For general regexp textobj creator, see http://stackoverflow.com/a/22418983/79125
 
