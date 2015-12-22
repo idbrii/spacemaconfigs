@@ -326,11 +326,11 @@ have identical symbols at identical goal columns as the symbol at point."
 ;; hello
 ;; hello
 
-(evil-define-text-object evil-textobj-word-column-inner-column
-  (count &optional beg end type)
-  "Select a word column.
-COUNT, BEG, END, and TYPE have no effect. This text object cannot take a count."
-  (evil-get-word-column-region))
+;;(evil-define-text-object evil-textobj-word-column-inner-column
+;;  (count &optional beg end type)
+;;  "Select a word column.
+;;COUNT, BEG, END, and TYPE have no effect. This text object cannot take a count."
+;;  (evil-get-word-column-region))
 
 (defun dotspacemacs/user-init ()
   "Initialization function for user code.
@@ -580,7 +580,8 @@ layers configuration. You are free to put any user code."
 
 
   ;; My hacked version (see above).
-  (define-key evil-inner-text-objects-map "c" 'evil-textobj-word-column-inner-column)
+  ;;(define-key evil-inner-text-objects-map "c" 'evil-textobj-word-column-inner-column)
+  (define-key evil-inner-text-objects-map "c" 'evil-get-word-column-region)
 
 
   ;; TODO: some of my maps are only active if I manually source this file.
