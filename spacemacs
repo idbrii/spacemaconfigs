@@ -381,6 +381,9 @@ layers configuration. You are free to put any user code."
   ;; Follow symlinks automatically.
   (setq vc-follow-symlinks t)
 
+  ;; Show file info instead of emacs info.
+  (setq projectile-generic-command "~/.vim/bundle/unite-david/bin/projectileopenfilelist.py")
+
   ;; Persistent undo
   ;; via https://plus.google.com/113859563190964307534/posts/JEF3sqRFHVA
   (setq undo-tree-auto-save-history t
@@ -650,6 +653,8 @@ layers configuration. You are free to put any user code."
   ;;(define-key evil-inner-text-objects-map "c" 'evil-textobj-word-column-inner-column)
   (define-key evil-inner-text-objects-map "c" 'evil-get-word-column-region)
 
+  ;; TODO: http://tuhdo.github.io/helm-projectile.html
+  ;; https://github.com/syl20bnr/spacemacs/blob/master/doc/VIMUSERS.org
 
   ;; TODO: some of my maps are only active if I manually source this file.
 
