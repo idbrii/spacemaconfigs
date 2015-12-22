@@ -276,6 +276,50 @@ Example: (evil-map visual \"<\" \"<gv\")"
       ((last-nonmenu-event nil))
     (save-buffers-kill-emacs)))
 
+(defun evil-get-word-column-region ()
+  "Look at the symbol at point, search backward and place the point before a
+symbol, and search forward and place the mark after a symbol such that all lines
+have identical symbols at identical goal columns as the symbol at point."
+  ;; Source: https://www.reddit.com/r/emacs/comments/3vz6lx/command_to_rectangle_select_a_column_of_text/cxs5vfn
+  (interactive)
+  (let (upper-pt lower-pt (next-line-add-newlines t))
+    (save-excursion
+      (let ((target (format "%s" (symbol-at-point))))
+        (while (looking-back "\\(\\sw\\|\\s_\\)" 1)
+          (backward-char 1))
+        (with-no-warnings
+            (save-excursion
+              (next-line 1)
+              (while (looking-at target)
+                (setf lower-pt (point))
+                (next-line 1)))
+            (save-excursion
+              (next-line -1)
+              (while (looking-at target)
+                (setf upper-pt (point))
+                (next-line -1))))))
+    (when (or upper-pt lower-pt)
+      (let ((upper-pt (or upper-pt (point)))
+            (lower-pt (or lower-pt (point))))    
+        (goto-char lower-pt)
+        (while (looking-at "\\(\\sw\\|\\s_\\)")
+          (forward-char 1))
+        (push-mark nil nil t)
+        (goto-char upper-pt)
+        (while (looking-back "\\(\\sw\\|\\s_\\)" 1)
+          (backward-char 1)))))
+  (rectangle-mark-mode))
+;; hello
+;; hello
+;; hello
+;; hello
+
+(evil-define-text-object evil-textobj-word-column-inner-column
+  (count &optional beg end type)
+  "Select a word column.
+COUNT, BEG, END, and TYPE have no effect. This text object cannot take a count."
+  (evil-get-word-column-region))
+
 (defun dotspacemacs/user-init ()
   "Initialization function for user code.
 It is called immediately after `dotspacemacs/init'.  You are free to put any
@@ -522,6 +566,11 @@ layers configuration. You are free to put any user code."
   (evil-leader-nbind "w +" 'maximize-window)
   (evil-nbind "C-w +" 'maximize-window)
 
+
+  ;; My hacked version (see above).
+  (define-key evil-inner-text-objects-map "c" 'evil-textobj-word-column-inner-column)
+
+  ;;(evil-vbind "ic" 'activate-word-column-region)
 
   ;; TODO: some of my maps are only active if I manually source this file.
 
