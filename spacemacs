@@ -56,6 +56,9 @@ values."
    ;; configuration in `dotspacemacs/config'.
    dotspacemacs-additional-packages '(
                                       ;; Github example from spacemacs packages.el: (evil-indent-textobject :location (recipe :fetcher github :repo "TheBB/evil-indent-textobject"))
+                                      ;; Otherwise, I think I can just put melpa package names here.
+
+                                      evil-textobj-anyblock ;; https://github.com/noctuid/evil-textobj-anyblock
 
                                       ;; Not yet in melpa. evil-textobj-word-column ;; https://github.com/noctuid/evil-textobj-word-column
                                       ;; This doesn't seem to work either.
@@ -578,6 +581,12 @@ layers configuration. You are free to put any user code."
   (evil-leader-nbind "w +" 'maximize-window)
   (evil-nbind "C-w +" 'maximize-window)
 
+
+  ;; Textobjs
+  ;; For general regexp textobj creator, see http://stackoverflow.com/a/22418983/79125
+
+  (define-key evil-inner-text-objects-map "." 'evil-textobj-anyblock-inner-block)
+  (define-key evil-outer-text-objects-map "." 'evil-textobj-anyblock-a-block)
 
   ;; My hacked version (see above).
   ;;(define-key evil-inner-text-objects-map "c" 'evil-textobj-word-column-inner-column)
