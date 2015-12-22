@@ -344,6 +344,21 @@ have identical symbols at identical goal columns as the symbol at point."
 ;;COUNT, BEG, END, and TYPE have no effect. This text object cannot take a count."
 ;;  (evil-get-word-column-region))
 
+(defmacro bind (&rest commands)
+  "Convenience macro which creates a lambda interactive command."
+  `(lambda ()
+     (interactive)
+     ,@commands))
+
+;; Source: https://github.com/justinmk/config/blob/master/.emacs.d/elisp/init-bindings.el
+(defun david-start-vim-at-point
+    (bind (start-process "vim" nil
+                         (if (executable-find "gvim")
+                             "gvim"
+                           (if (executable-find "nvim") "nvim" "vim"))
+                         buffer-file-name)))
+
+
 (defun dotspacemacs/user-init ()
   "Initialization function for user code.
 It is called immediately after `dotspacemacs/init'.  You are free to put any
@@ -612,6 +627,8 @@ layers configuration. You are free to put any user code."
   ;; TODO Found gx here. look for more https://github.com/justinmk/config/blob/master/.emacs.d/elisp/init-bindings.el
   ;;(evil-nbind "gx" 'browse-url-at-point)
 
+
+  ;;(evil-nbind "M-v" 'david-start-vim-at-point)
 
   ;; TODO: Add ability to toggle highlights like vim-mark.
   ;;(defun toggle-highlight ()
