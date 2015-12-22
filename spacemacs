@@ -385,8 +385,9 @@ layers configuration. You are free to put any user code."
   ;; Follow symlinks automatically.
   (setq vc-follow-symlinks t)
 
-  ;; Show file info instead of emacs info.
+  ;; Use my filelist to describe project.
   (setq projectile-generic-command "~/.vim/bundle/unite-david/bin/projectileopenfilelist.py")
+  (setq projectile-indexing-method 'alien)
 
   ;; Persistent undo
   ;; via https://plus.google.com/113859563190964307534/posts/JEF3sqRFHVA
@@ -696,3 +697,9 @@ layers configuration. You are free to put any user code."
 
 ;; Do not write anything past this comment. This is where Emacs will
 ;; auto-generate custom variable definitions.
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(large-file-warning-threshold 100000000))
