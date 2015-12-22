@@ -30,9 +30,14 @@ values."
                                        markdown
                                        org
                                        python
+                                       ;; TODO: p4
                                        syntax-checking
                                        visual-regexp
                                        visual-regexp-steroids
+                                       '((c-c++ :variables
+                                                c-c++-default-mode-for-headers 'c++-mode
+                                                ;;c-c++-enable-clang-support t
+                                                ))
                                        ;; ----------------------------------------------------------------
                                        ;; Example of useful layers you may want to use right away.
                                        ;; Uncomment some layer names and press <SPC f e R> (Vim style) or
