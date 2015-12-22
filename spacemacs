@@ -609,6 +609,9 @@ layers configuration. You are free to put any user code."
   (evil-nbind "C-w +" 'maximize-window)
 
 
+  ;; TODO Found gx here. look for more https://github.com/justinmk/config/blob/master/.emacs.d/elisp/init-bindings.el
+  ;;(evil-nbind "gx" 'browse-url-at-point)
+
   ;; Textobjs
   ;; For general regexp textobj creator, see http://stackoverflow.com/a/22418983/79125
 
