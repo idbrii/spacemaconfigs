@@ -54,7 +54,16 @@ values."
    ;; wrapped in a layer. If you need some configuration for these
    ;; packages then consider to create a layer, you can also put the
    ;; configuration in `dotspacemacs/config'.
-   dotspacemacs-additional-packages '()
+   dotspacemacs-additional-packages '(
+                                      ;; Github example from spacemacs packages.el: (evil-indent-textobject :location (recipe :fetcher github :repo "TheBB/evil-indent-textobject"))
+
+                                      ;; Not yet in melpa. evil-textobj-word-column ;; https://github.com/noctuid/evil-textobj-word-column
+                                      ;; This doesn't seem to work either.
+                                      ;;(evil-textobj-word-column
+                                      ;; :location (recipe
+                                      ;;            :fetcher github
+                                      ;;            :repo "noctuid/evil-textobj-word-column"))
+                                      )
    ;; A list of packages and/or extensions that will not be install and loaded.
    dotspacemacs-excluded-packages '(
                                     ace-jump-mode
@@ -281,6 +290,8 @@ Example: (evil-map visual \"<\" \"<gv\")"
 symbol, and search forward and place the mark after a symbol such that all lines
 have identical symbols at identical goal columns as the symbol at point."
   ;; Source: https://www.reddit.com/r/emacs/comments/3vz6lx/command_to_rectangle_select_a_column_of_text/cxs5vfn
+  ;; With tweaks from: https://github.com/noctuid/evil-textobj-word-column
+  (evil-normal-state)
   (interactive)
   (let (upper-pt lower-pt (next-line-add-newlines t))
     (save-excursion
@@ -288,19 +299,19 @@ have identical symbols at identical goal columns as the symbol at point."
         (while (looking-back "\\(\\sw\\|\\s_\\)" 1)
           (backward-char 1))
         (with-no-warnings
-            (save-excursion
-              (next-line 1)
-              (while (looking-at target)
-                (setf lower-pt (point))
-                (next-line 1)))
-            (save-excursion
-              (next-line -1)
-              (while (looking-at target)
-                (setf upper-pt (point))
-                (next-line -1))))))
+          (save-excursion
+            (next-line 1)
+            (while (looking-at target)
+              (setf lower-pt (point))
+              (next-line 1)))
+          (save-excursion
+            (next-line -1)
+            (while (looking-at target)
+              (setf upper-pt (point))
+              (next-line -1))))))
     (when (or upper-pt lower-pt)
       (let ((upper-pt (or upper-pt (point)))
-            (lower-pt (or lower-pt (point))))    
+            (lower-pt (or lower-pt (point))))
         (goto-char lower-pt)
         (while (looking-at "\\(\\sw\\|\\s_\\)")
           (forward-char 1))
@@ -308,7 +319,8 @@ have identical symbols at identical goal columns as the symbol at point."
         (goto-char upper-pt)
         (while (looking-back "\\(\\sw\\|\\s_\\)" 1)
           (backward-char 1)))))
-  (rectangle-mark-mode))
+  (evil-range
+   upper-pt lower-pt 'rectangle))
 ;; hello
 ;; hello
 ;; hello
@@ -570,7 +582,6 @@ layers configuration. You are free to put any user code."
   ;; My hacked version (see above).
   (define-key evil-inner-text-objects-map "c" 'evil-textobj-word-column-inner-column)
 
-  ;;(evil-vbind "ic" 'activate-word-column-region)
 
   ;; TODO: some of my maps are only active if I manually source this file.
 
