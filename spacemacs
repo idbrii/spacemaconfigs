@@ -643,6 +643,9 @@ layers configuration. You are free to put any user code."
   ;;  )
   ;; (evil-leader-nbind "hh" highlight-phrase)
 
+  ;; endoscope
+  (define-key smartparens-mode-map (kbd "C-s") 'sp-forward-sexp)
+
   ;; Textobjs
   ;; For general regexp textobj creator, see http://stackoverflow.com/a/22418983/79125
 
