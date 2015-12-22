@@ -450,6 +450,24 @@ layers configuration. You are free to put any user code."
   ;; More useful double leader.
   (evil-leader-nbind "SPC" 'helm-M-x)
 
+  ;;
+  ;; Unite-like bindings
+
+  (evil-leader-nbind "o SPC" 'helm-resume)
+
+  (evil-leader-nbind "oo" 'ido-find-file)
+  ;; Switch to header/inc/implementation/etc.
+  (evil-leader-nbind "oa" 'ido-find-alternate-file) ;; this is not as automatic as I'd like
+  (evil-leader-nbind "ob" 'helm-mini)
+  ;;(evil-leader-nbind "oc" recent command)
+  (evil-leader-nbind "of" 'helm-semantic-or-imenu)
+  ;;(evil-leader-nbind "oh" 'history/command)
+  (evil-leader-nbind "ol" 'helm-regexp)
+  (evil-leader-nbind "om" 'helm-recentf)
+  (evil-leader-nbind "on" 'ido-find-alternate-file)
+  (evil-leader-nbind "or" 'evil-show-registers)
+  ;;(evil-leader-nbind "os" 'history/search )
+  (evil-leader-nbind "oy" 'helm-show-kill-ring) ;; history/yank
 
   ;; Navigation
   (define-key evil-motion-state-map (kbd "<M-up>") 'evil-jump-backward)
