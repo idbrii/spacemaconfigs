@@ -494,6 +494,11 @@ layers configuration. You are free to put any user code."
   ;; Navigation
   ;;(evil-motion-bind "<M-up>" 'evil-jump-backward)
   ;;(evil-motion-bind "<M-down>" 'evil-jump-forward)
+  ;;;; Disable default jumping since above defines my preferred method.
+  ;;(evil-motion-bind "<C-o>" nil)
+  ;;(evil-motion-bind "<C-i>" nil)
+  ;;(evil-nbind "<C-o>" nil)
+  ;;(evil-nbind "<C-i>" nil)
 
 
   ;; File jumping
@@ -530,6 +535,10 @@ layers configuration. You are free to put any user code."
                 (cons
                  '(?a . ("<" . ">"))
                  evil-surround-pairs-alist))
+
+  ;; Surround with comment
+  ;; Consider https://github.com/remyferre/comment-dwim-2
+  ;;(evil-nbind "C-o" 'comment-dwim)
 
   ;;(evil-map motion "sr" "s[")
 
