@@ -660,6 +660,16 @@ layers configuration. You are free to put any user code."
   ;;(define-key evil-inner-text-objects-map "c" 'evil-textobj-word-column-inner-column)
   (define-key evil-inner-text-objects-map "c" 'evil-get-word-column-region)
 
+  ;;(evil-nbind ">" (let ((map (make-sparse-keymap)))
+                    ;;(evil-bind map ">," '((forward-sexp) (transpose-sexps)))
+                    ;;map))
+  ;;(evil-nbind "<" (let ((map (make-sparse-keymap)))
+                    ;;(evil-bind map "<," '((backward-sexp) (transpose-sexps)))
+                    ;;map))
+
+  ;;(evil-nbind ">," '((forward-sexp) (transpose-sexps)))
+  ;;(evil-nbind "<," '((backward-sexp) (transpose-sexps)))
+
   ;; TODO: http://tuhdo.github.io/helm-projectile.html
   ;; https://github.com/syl20bnr/spacemacs/blob/master/doc/VIMUSERS.org
 
