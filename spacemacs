@@ -290,6 +290,16 @@ Example: (evil-map visual \"<\" \"<gv\")"
   (evil-search-highlight-persist-remove-all)
   (redraw-display))
 
+;; Like vim-argumentative
+(defun argumentative-forward ()
+  (interactive)
+  (forward-sexp)
+  (transpose-sexps))
+(defun argumentative-backward ()
+  (interactive)
+  (backward-sexp)
+  (transpose-sexps))
+
 ;; shutdown emacs server instance. Used from bash aliases.
 (defun david-server-shutdown ()
   "Save buffers, Quit, and Shutdown (kill) server.
@@ -680,15 +690,19 @@ layers configuration. You are free to put any user code."
   ;;(define-key evil-inner-text-objects-map "c" 'evil-textobj-word-column-inner-column)
   (define-key evil-inner-text-objects-map "c" 'evil-get-word-column-region)
 
-  ;;(evil-nbind "c" (let ((map (make-sparse-keymap)))
-                    ;;(evil-bind map "x" 'transpose-sexps)
-                    ;;map))
-  ;;(evil-nbind ">" (let ((map (make-sparse-keymap)))
-                    ;;(evil-bind map ">," '((forward-sexp) (transpose-sexps)))
-                    ;;map))
-  ;;(evil-nbind "<" (let ((map (make-sparse-keymap)))
-                    ;;(evil-bind map "<," '((backward-sexp) (transpose-sexps)))
-                    ;;map))
+  ;; See: https://www.reddit.com/r/emacs/comments/3xwffe/evil_map_unused_namespace_in_operatorpending/
+  ;;(define-key evil-normal-state-map (kbd "c")
+  ;;  (let ((map (make-sparse-keymap)))
+  ;;    (define-key map "x" 'transpose-sexps)
+  ;;    map))
+  ;;(define-key evil-normal-state-map ">"
+  ;;  (let ((map (make-sparse-keymap)))
+  ;;    (define-key map "," 'argumentative-forward)
+  ;;    map))
+  ;;(define-key evil-normal-state-map "<"
+  ;;  (let ((map (make-sparse-keymap)))
+  ;;    (define-key map "," 'argumentative-backward)
+  ;;    map))
 
   ;;(evil-nbind "cx" 'transpose-sexps)
   ;;(evil-nbind ">," '((forward-sexp) (transpose-sexps)))
