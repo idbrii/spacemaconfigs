@@ -75,6 +75,8 @@ values."
 
                                       ;; Doesn't define any functions. Maybe I'm using it wrong. general-close ;; https://github.com/emacs-berlin/general-close
                                       evil-vimish-fold ;; https://github.com/alexmurray/evil-vimish-fold
+
+                                      vimrc-mode ;; https://github.com/mcandre/vimrc-mode
                                       )
    ;; A list of packages and/or extensions that will not be install and loaded.
    dotspacemacs-excluded-packages '(
